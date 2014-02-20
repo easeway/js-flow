@@ -6,6 +6,8 @@
     "keywords": ["async", "flow", "programming", "dsl"],
     "scripts": {
         "test": "mocha -R spec test/*-test.js",
+        "cov-lcov": "mocha -r blanket -R mocha-lcov-reporter test/*-unit-test.js",
+        "cov-coveralls": "mocha -r blanket -R mocha-lcov-reporter test/*-unit-test.js | ./node_modules/coveralls/bin/coveralls.js",
         "cov-html": "mocha -r blanket -R html-cov test/*-unit-test.js >_coverage.html"
     },
     "repository": {
@@ -17,8 +19,10 @@
         "js-class": "0.0.2"
     },
     "devDependencies": {
-        "mocha": "1.12.0",
-        "blanket": "1.1.6"
+        "mocha": "1.17.1",
+        "mocha-lcov-reporter": "0.0.1",
+        "blanket": "1.1.6",
+        "coveralls": "2.8.0"
     },
     "engines": {
         "node": ">=0.10",
