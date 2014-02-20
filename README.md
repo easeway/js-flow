@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/easeway/js-flow.png?branch=master)](https://travis-ci.org/easeway/js-flow)
+
+
 # Asynchronous Flow Programming Library for Node.js
 
 This is a Node.js module which provides a DSL for simplifying asynchronous flow programming in Node.js.
