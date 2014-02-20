@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/easeway/js-flow.png?branch=master)](https://travis-ci.org/easeway/js-flow)
-
+[![Coverage Status](https://coveralls.io/repos/easeway/js-flow/badge.png?branch=master)](https://coveralls.io/r/easeway/js-flow?branch=master)
 
 # Asynchronous Flow Programming Library for Node.js
 
