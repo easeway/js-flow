@@ -7,7 +7,7 @@
     "scripts": {
         "test": "mocha -R spec test/*-test.js",
         "cov-lcov": "mocha -r blanket -R mocha-lcov-reporter test/*-unit-test.js",
-        "cov-coveralls": "mocha -r blanket -R mocha-lcov-reporter test/*-unit-test.js | ./node_modules/coveralls/bin/coveralls.js",
+        "cov-coveralls": "NODE_ENV=test YOURPACKAGE_COVERAGE=1 mocha -r blanket -R mocha-lcov-reporter test/*-unit-test.js | ./node_modules/coveralls/bin/coveralls.js",
         "cov-html": "mocha -r blanket -R html-cov test/*-unit-test.js >_coverage.html"
     },
     "repository": {
