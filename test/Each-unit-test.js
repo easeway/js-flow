@@ -25,7 +25,7 @@ describe('Each', function () {
         var items = {};
         each()
             .in(['a', 'b', 'c'])
-            .withIndex()
+            .keys()
             .do(function (index, item, next) {
                 items[item] = index;
                 next();
@@ -62,7 +62,7 @@ describe('Each', function () {
         var items = {};
         each()
             .in({ 'a': 'va', 'b': 'vb', 'c': 'vc' })
-            .withIndex()
+            .keys()
             .do(function (key, item, next) {
                 items[item] = key;
                 next();
@@ -386,6 +386,23 @@ describe('Each', function () {
                 Try.final(function () {
                     assert.equal(Array.isArray(err), false);
                     assert.deepEqual(vals, [100, 80, 60, 40]);
+                }, done);
+            });
+    });
+
+    it('errors ignored', function (done) {
+        var count = 0;
+        each([100, 80, 60, 40, 20])
+            .series()
+            .do(function(num, next) {
+                count ++;
+                next(new Error());
+            })
+            .ignoreErrors()
+            .run(function (err) {
+                Try.final(function () {
+                    assert.equal(err, null);
+                    assert.equal(count, 5);
                 }, done);
             });
     });

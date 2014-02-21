@@ -111,6 +111,22 @@ describe('Times', function () {
         });
     });
 
+    it('ignore errors', function (done) {
+        var count = 0;
+        times(5)
+            .do(function (n, next) {
+                count += n;
+                next(new Error());
+            })
+            .ignoreErrors()
+            .run(function (err) {
+                Try.final(function () {
+                    assert.equal(err, null);
+                    assert.equal(count, 10);
+                }, done);
+            });
+    });
+
     it('break', function (done) {
         var count = 0;
         times(5).series().do(function (badN, n, next) {

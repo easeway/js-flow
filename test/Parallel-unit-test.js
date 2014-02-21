@@ -58,4 +58,24 @@ describe('Parallel', function () {
                 }, done);
             });
     });
+
+    it('errors ignored', function (done) {
+        var results = [];
+        parallel()
+            .do(function (v, next) {
+                results.push(v + 1);
+                next(new Error());
+            })
+            .do(function (v, next) {
+                results.push(v + 1);
+                next(new Error());
+            })
+            .ignoreErrors()
+            .run(10, function (err) {
+                Try.final(function () {
+                    assert.equal(err, null);
+                    assert.deepEqual(results, [11, 11]);
+                }, done);
+            });
+    });
 });

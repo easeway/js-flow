@@ -74,4 +74,22 @@ describe('Steps', function () {
                 }, done);
             });
     });
+
+    it('errors ignored', function (done) {
+        steps()
+            .chain()
+            .next(function (v, next) {
+                next(new Error(), v + 1);
+            })
+            .next(function (v, next) {
+                next(new Error(), v + 1);
+            })
+            .ignoreErrors()
+            .run(10, function (err, v) {
+                Try.final(function () {
+                    assert.equal(err, null);
+                    assert.equal(v, 12);
+                }, done);
+            });
+    });
 });
