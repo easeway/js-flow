@@ -35,7 +35,7 @@ describe('Times', function () {
             setTimeout(function () {
                 seq.push(n);
                 next();
-            }, n < 3 ? 100 - n * 10 : (90 - n * 20));
+            }, n < 3 ? 100 - n * 10 : (100 - n * 20));
         }).run(function () {
             Try.final(function () {
                 assert.deepEqual(seq, [2, 1, 0, 4, 3]);
