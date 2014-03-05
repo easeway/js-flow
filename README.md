@@ -192,6 +192,138 @@ In any iteration function (Loop, Enumeration, Times etc), passing string `break`
 
 For all function passed in, `bind` is not necessary as `.with(context)` will ensure the functions are invoked with correct context.
 
+### Examples
+
+Create directories in parallel
+
+```javascript
+flow.each(['dir1', 'dir2', 'dir3'])     // .each([...]) is short for .each().in([...])
+    .do(fs.mkdir)
+    .aggregateErrors()
+    .run(function (err) {
+        if (Array.isArray(err)) {   // some errors happened
+            ...
+        } else if (err) {
+            ...
+        } else {
+            ...
+        }
+    });
+```
+
+Create directories in series
+
+```javascript
+flow.each(['dir1', 'dir1/dir2', 'dir1/dir2/dir3'])
+    .series()                       // equivalent to .concurrent(1)
+    .do('mkdir')                    // use method name here, .with must be used
+    .with(fs)
+    .run(function (err) {
+        if (err) {                  // operation stops on the first error
+            ...
+        } else {
+            ...
+        }
+    });
+```
+
+Send requests in parallel
+
+```javascript
+var Request = Class({
+    ...
+    send: function (callback) {     // callback is function (err, response)
+        ...
+    }
+});
+
+flow.each([req1, req2, req3, ... reqN])
+    .concurrent(4)                  // allow max 4 requests in parallel
+    .map('&send')
+    .aggregateErrors()
+    .run(function (err, responses) {
+        // responses is an array of corresponding responses
+    });
+```
+
+Reduce responses
+
+```javascript
+flow.each([req1, req2, req3, ... reqN])
+    .concurrent(4)                  // allow max 4 requests in parallel
+    .map('&send')
+    .reduce(function (value, response, next) {
+        next(null, value + response.value);
+    })
+    .run(100, function (err, value) {   // initial value for reduce is 100
+        ...
+    });
+```
+
+Arguments passed to `run`
+
+```javascript
+flow.steps()
+    .next(function (factor1, factor2, next) {
+        ...
+    })
+    .next(function (factor1, factor2, next) {
+
+    })
+    .run(12, 15, function (err) { ... });   // for all steps, factor1 = 12, factor2 = 15
+```
+
+Chained steps
+
+```javascript
+flow.steps()
+    .next(function (factor1, factor2, next) {
+        ...
+        next(null, 120);
+    })
+    .next(function (factor1, factor2, factor3, next) {
+        ...
+        next(null, factor1 + factor2 + factor3);
+    })
+    .run(12, 15, function (err, result) { ... });   // for all steps, factor1 = 12, factor2 = 15
+```
+
+Times
+
+```javascript
+flow.times(10)
+    .do(function (n, next)) {
+        ... // n will be 0 - 9
+    }
+    .run(...);
+```
+
+While loop
+
+```javascript
+flow.loop()
+    .while(function (next) {
+        next(true/false);
+    })
+    .do(function (next) {
+        ...
+    })
+    .run(...);
+```
+
+Do-while loop
+
+```javascript
+flow.loop()
+    .do(function (next) {
+        ...
+    })
+    .while (function (next) {
+        next(true/false)
+    })
+    .run(...);
+```
+
 ## License
 
 MIT/X11 License

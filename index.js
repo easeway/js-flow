@@ -1,5 +1,6 @@
 var Try         = require('./lib/Try'),
     Flow        = require('./lib/Flow'),
+    Enumeration = require('./lib/Enumeration'),
     Each        = require('./lib/Each'),
     Parallel    = require('./lib/Parallel'),
     Steps       = require('./lib/Steps'),
@@ -7,17 +8,18 @@ var Try         = require('./lib/Try'),
     Times       = require('./lib/Times');
 
 module.exports = {
-    Try:        Try,
-    tries:      Try.tries,
-    final:      Try.final,
-    br:         Try.br,
+    Try:            Try,
+    tries:          Try.tries,
+    final:          Try.final,
+    br:             Try.br,
 
-    Flow:       Flow,
-    Each:       Each,
-    Parallel:   Parallel,
-    Steps:      Steps,
-    Loop:       Loop,
-    Times:      Times,
+    Flow:           Flow,
+    Enumeration:    Enumeration,
+    Each:           Each,
+    Parallel:       Parallel,
+    Steps:          Steps,
+    Loop:           Loop,
+    Times:          Times,
 
     each: function (items) {
         var f = new Each();
