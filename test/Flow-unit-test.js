@@ -13,6 +13,38 @@ describe('Flow', function () {
         new SubClass().run(1, 2, 3);
     });
 
+    it('#onsuccess', function () {
+        var SubClass = Class(Flow, {
+            _run: function (args, callback) {
+                callback();
+            }
+        });
+        var val = 0;
+        new SubClass().onsuccess(function () {
+            val ++;
+        }).run(function (err) {
+            assert.equal(err, null);
+            assert.equal(val, 1);
+        });
+    });
+
+    it('#onerror', function () {
+        var SubClass = Class(Flow, {
+            _run: function (args, callback) {
+                callback(new Error());
+            }
+        });
+        var error;
+        new SubClass().onerror(function (err) {
+            error = err;
+        }).run(function (err) {
+            assert.ok(error);
+            assert.ok(error instanceof Error);
+            assert.ok(err);
+            assert.strictEqual(err, error);
+        });
+    });
+
     describe('#_fn', function () {
         var vals;
 

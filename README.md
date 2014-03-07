@@ -192,6 +192,17 @@ In any iteration function (Loop, Enumeration, Times etc), passing string `break`
 
 For all function passed in, `bind` is not necessary as `.with(context)` will ensure the functions are invoked with correct context.
 
+### Extra callbacks
+
+```javascript
+flow....onsuccess(successFunc).run(callback)
+flow....onerror(errorFunc).run(callback)
+```
+
+`successFunc` and `errorFunc` are invoked synchronously before invoking `callback`.
+Arguments passed to `successFunc` doesn't including `Error` which is usually the first arguments for callbacks,
+and `errorFunc` is only passed single argument which is an instance of `Error`.
+
 ### Examples
 
 Create directories in parallel

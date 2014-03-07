@@ -1,7 +1,7 @@
 {
     "name": "js-flow",
     "description": "Asynchronous Flow Programming Library for Node.js",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Yisui Hu <easeway@gmail.com>",
     "keywords": ["async", "flow", "programming", "dsl"],
     "scripts": {
